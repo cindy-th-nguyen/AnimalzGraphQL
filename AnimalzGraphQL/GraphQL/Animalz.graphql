@@ -1,0 +1,29 @@
+query AnimalzQueryTest
+{
+users{
+    userID
+    firstName
+    phoneNumber
+    gender
+    animalList {
+      name
+      race
+      gender
+    }
+  }
+  animals {
+    name
+    animalID
+    ownerID
+  }
+  annonces {
+    annonceID
+    animalID
+    title
+    description
+    creationDate
+    commentaires {
+      commentaire
+    }
+  }
+}
