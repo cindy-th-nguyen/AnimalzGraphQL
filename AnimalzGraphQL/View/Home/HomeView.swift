@@ -12,6 +12,8 @@ struct HomeView: View {
     @State var txt = ""
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
+    @State var showModal: Bool = false
+    
     var body : some View {
         
         VStack(spacing: 0) {
@@ -27,7 +29,7 @@ struct HomeView: View {
                     if self.show {
                         Image(systemName: "magnifyingglass")
                             .padding(.horizontal, 8)
-                        TextField("Search animalz", text: self.$txt)
+                        TextField("Que recherhez-vous ?", text: self.$txt)
                         Button(action: {
                             withAnimation {
                                 self.txt = ""
@@ -78,6 +80,7 @@ struct HomeView: View {
                 .padding(.horizontal, 15)
                 .padding(.top, 10)
             }
+            
             Text(testQueryGraphQL).onAppear(perform: {
                 Network.shared.apollo.fetch(query: AnimalzQueryTestQuery()) { result in
                     switch result{
@@ -93,21 +96,24 @@ struct HomeView: View {
                     }
                 }
             })
-//            
-//            HStack {
-//                Spacer()
-//                Button(action: {}) {
-//                    Image(systemName: "plus")
-//                        .foregroundColor(.white)
-//                        .padding()
-//                }
-//                .background(Color.orange)
-//                .clipShape(Circle())
-//                .padding()
-//            }
+            
+            HStack {
+                Spacer()
+                Button(action: {
+                    self.showModal.toggle()
+                }) {
+                    Image(systemName: "plus")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .background(Color.orange)
+                .clipShape(Circle())
+                .padding()
+            }
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
         .edgesIgnoringSafeArea(.top)
+        .navigationViewStyle(StackNavigationViewStyle())
+        .sheet(isPresented: self.$showModal) { ScreenModal() }
     }
 }
 

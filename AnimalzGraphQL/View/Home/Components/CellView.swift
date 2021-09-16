@@ -32,12 +32,14 @@ struct CellView: View {
                         .font(.headline)
                 }
                 .padding(.bottom, 10)
-                .padding(.leading, 20)
+                .padding(10)
                 .background(Color.black.opacity(0.4))
                 .cornerRadius(20)
                 Spacer()
                 Button(action: {}) {
-                    Image(systemName: "arrow.right").foregroundColor(.black).padding()
+                    Image(systemName: "arrow.right")
+                        .foregroundColor(.black)
+                        .padding()
                 }
                 .background(Color.white)
                 .clipShape(Circle())
