@@ -78,21 +78,23 @@ struct HomeView: View {
                 .padding(.horizontal, 15)
                 .padding(.top, 10)
             }
+            
             Text(testQueryGraphQL).onAppear(perform: {
-                            Network.shared.apollo.fetch(query: AnimalzQueryTestQuery()) { result in
-                                switch result{
-                                case .success(let graphQLResult):
-                                    if let users = graphQLResult.data?.users {
-                                        self.testQueryGraphQL = "firt user json: \(users[0]?.firstName)"
-                                        users.forEach { user in
-                                            print("user firstName : \(user?.firstName)")
-                                        }
-                                    }
-                                case .failure(let error):
-                                    print("Error : \(error)")
-                                }
+                Network.shared.apollo.fetch(query: AnimalzQueryTestQuery()) { result in
+                    switch result{
+                    case .success(let graphQLResult):
+                        if let users = graphQLResult.data?.users {
+                            self.testQueryGraphQL = "first user json: \(users[0]?.firstName)"
+                            users.forEach { user in
+                                print("user firstName : \(user?.firstName)")
                             }
-                        })
+                        }
+                    case .failure(let error):
+                        print("Error : \(error)")
+                    }
+                }
+            })
+            
             HStack {
                 Spacer()
                 Button(action: {

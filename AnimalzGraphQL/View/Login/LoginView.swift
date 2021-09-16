@@ -30,7 +30,7 @@ struct LoginView: View {
                 )
             
             SecureField(
-                "Password",
+                "Mot de passe",
                 text: $password)
                 .disableAutocorrection(true)
                 .padding()
@@ -52,7 +52,7 @@ struct LoginView: View {
             })
             
             Button(action: {}, label: {
-                Text("Forgot Password?")
+                Text("Mot de passe oublié?")
             })
         }
         .padding(.leading, 40)
