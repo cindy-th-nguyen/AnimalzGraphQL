@@ -12,9 +12,22 @@ struct ContentView: View {
     
     var body: some View {
         if isLoggedIn {
-            HomeView()
-                .navigationTitle("")
-                .navigationBarHidden(true)
+            TabView {
+                HomeView()
+                    .navigationTitle("")
+                    .navigationBarHidden(true)
+                    .tabItem {
+                        Image(systemName: "phone.fill")
+                        Text("First Tab")
+                    }
+                ProfilView()
+                    .tabItem {
+                        Image(systemName: "phone.fill")
+                        Text("Second Tab")
+                    }
+            }
+            
+            
         } else {
             LoginView()
         }
