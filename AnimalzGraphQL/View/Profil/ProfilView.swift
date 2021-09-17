@@ -9,10 +9,14 @@ import SwiftUI
 
 struct ProfilView: View {
     var body: some View {
-        VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            VStack {
+                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            }
         }
-        
+        .navigationBarHidden(false)
+        .navigationTitle("Hello")
+        .navigationBarBackButtonHidden(false)
     }
 }
 

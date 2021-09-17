@@ -60,6 +60,8 @@ struct HomeView: View {
             .padding(.horizontal)
             .padding(.bottom, 10)
             .background(Color.orange)
+            
+            
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 15) {
                     if self.txt != "" {
