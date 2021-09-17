@@ -34,11 +34,10 @@ struct CellView: View {
                         .font(.headline)
                         .shadow(color: Color.black, radius: 15)
                 }
-//                .padding(.bottom, 10)
                 .padding(10)
-//                .background(Color.black.opacity(0.4))
-//                .cornerRadius(20)
+                
                 Spacer()
+                
                 Button(action: {}) {
                     Image(systemName: "arrow.right")
                         .foregroundColor(.black)

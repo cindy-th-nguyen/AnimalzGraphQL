@@ -13,6 +13,7 @@ struct HomeView: View {
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
     @State var showModal: Bool = false
+    @State var willNavigateToUserProfil = false
     
     var body : some View {
         VStack(spacing: 0) {
@@ -84,9 +85,9 @@ struct HomeView: View {
                     switch result{
                     case .success(let graphQLResult):
                         if let users = graphQLResult.data?.users {
-                            self.testQueryGraphQL = "first user json: \(users[0]?.firstName)"
+                            self.testQueryGraphQL = "first user json: \(users[0]?.firstName ?? "No name found")"
                             users.forEach { user in
-                                print("user firstName : \(user?.firstName)")
+                                print("user firstName : \(user?.firstName ?? "No name found")")
                             }
                         }
                     case .failure(let error):
@@ -96,6 +97,16 @@ struct HomeView: View {
             })
             
             HStack {
+                Button(action: {
+                    self.willNavigateToUserProfil = true
+                }) {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .background(Color.orange)
+                .clipShape(Circle())
+                .padding()
                 Spacer()
                 Button(action: {
                     self.showModal.toggle()
@@ -112,6 +123,7 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.top)
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: self.$showModal) { ScreenModal() }
+        .navigate(to: ProfilView(), when: $willNavigateToUserProfil)
     }
 }
 

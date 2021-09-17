@@ -12,52 +12,66 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var isEditing = false
     @State private var willMoveToNextScreen = false
+    @State private var willMoveToSignUpScreen = false
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 25) {
-            Text("Login")
-                .padding(.bottom, 40)
-                .font(Font.largeTitle.bold())
-            
-            TextField(
-                "Email",
-                text: $email)
-                .disableAutocorrection(true)
-                .keyboardType(.emailAddress)
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color.orange, lineWidth: 2)
-                )
-            
-            SecureField(
-                "Mot de passe",
-                text: $password)
-                .disableAutocorrection(true)
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color.orange, lineWidth: 2)
-                )
-            Button(action: {
-                self.willMoveToNextScreen = true
-            }, label: {
+        VStack {
+            VStack(alignment: .center, spacing: 25) {
                 Text("Login")
-                    .fontWeight(.bold)
-                    .font(.headline)
-                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding(.bottom, 40)
+                    .font(Font.largeTitle.bold())
+                
+                TextField(
+                    "Email",
+                    text: $email)
+                    .disableAutocorrection(true)
+                    .keyboardType(.emailAddress)
                     .padding()
-                    .foregroundColor(.white)
-                    .background(Color.orange)
-                    .cornerRadius(25)
-            })
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.orange, lineWidth: 2)
+                    )
+                
+                SecureField(
+                    "Mot de passe",
+                    text: $password)
+                    .disableAutocorrection(true)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.orange, lineWidth: 2)
+                    )
+                Button(action: {
+                    self.willMoveToNextScreen = true
+                }, label: {
+                    Text("Login")
+                        .fontWeight(.bold)
+                        .font(.headline)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.orange)
+                        .cornerRadius(25)
+                })
+                
+                Button(action: {}, label: {
+                    Text("Mot de passe oublié?")
+                })
+            }
+            .padding(40)
             
-            Button(action: {}, label: {
-                Text("Mot de passe oublié?")
-            })
+            HStack(alignment: .bottom) {
+                Text("Pas encore de compte?")
+                Button(action: {
+                    self.willMoveToSignUpScreen = true
+                }, label: {
+                    Text("Inscrivez-vous ici")
+                })
+            }
+            .padding(.bottom, 20)
         }
-        .padding(.leading, 40)
-        .padding(.trailing, 40)
         .navigate(to: HomeView(), when: $willMoveToNextScreen)
+        .navigate(to: SignUpView(), when: $willMoveToSignUpScreen)
     }
 }
 
