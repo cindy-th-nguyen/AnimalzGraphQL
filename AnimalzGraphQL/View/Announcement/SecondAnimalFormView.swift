@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct SecondAnimalFormView: View {
-    @State private var selectedRace = ""
-    @State private var selectedSpecie = ""
-    @State private var selectedGender: Gender = .female
-    @State private var selectedColor = ""
-    @State private var species = ["Chat", "Chien", "Oiseau", "Autre"]
-    @State private var races = ["race1", "race2", "race3" ,"Autre"]
-    @State private var colors = ["Noir", "Blanc", "Roux" ,"Marron"]
+    @State private var selectedRace: RaceEnum? = .shiba
+    @State private var selectedSpecie: SpeciesEnum?
+    @State private var selectedGender: AnimalGender? = .female
+    @State private var selectedColor: FurColorEnum? = .blue
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -23,7 +20,7 @@ struct SecondAnimalFormView: View {
                 .font(.body)
                 .foregroundColor(.orange)
             Picker("", selection: $selectedGender) {
-                ForEach(Gender.allCases, id: \.self) { value in
+                ForEach(AnimalGender.allCases, id: \.self) { value in
                     Text(value.rawValue).tag(value)
                 }
             }.pickerStyle(SegmentedPickerStyle())
@@ -32,31 +29,31 @@ struct SecondAnimalFormView: View {
                 .font(.body)
                 .foregroundColor(.orange)
             Picker("", selection: $selectedSpecie) {
-                ForEach(species, id: \.self) {
-                    Text($0)
+                ForEach(SpeciesEnum.allCases, id: \.self) { value in
+                    Text(value.rawValue).tag(value)
                 }
             }.pickerStyle(SegmentedPickerStyle())
             
-            if self.selectedSpecie != "" {
+            if self.selectedSpecie == nil {
                 Text("Race")
                     .fontWeight(.bold)
                     .font(.body)
                     .foregroundColor(.orange)
                 Picker("", selection: $selectedRace) {
-                    ForEach(races, id: \.self) {
-                        Text($0)
+                    ForEach(RaceEnum.allCases, id: \.self) { value in
+                        Text(value.rawValue).tag(value)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
             }
             
-            if self.selectedRace != "" {
+            if self.selectedRace?.rawValue == "" {
                 Text("Couleur du pelage")
                     .fontWeight(.bold)
                     .font(.body)
                     .foregroundColor(.orange)
                 Picker("", selection: $selectedColor) {
-                    ForEach(colors, id: \.self) {
-                        Text($0)
+                    ForEach(FurColorEnum.allCases, id: \.self) { value in
+                        Text(value.rawValue).tag(value)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
             }
