@@ -1,12 +1,11 @@
-# QQ CHOSE
-query AnimalzQueryTest
-{
-users{
+query specificQuery {
+  users {
     userID
     firstName
     phoneNumber
     gender
     animalList {
+      animalID
       name
       race
       gender
@@ -29,4 +28,51 @@ users{
   }
 }
 
-#test
+mutation newUserMutation {
+  newUser(input: {lastName: "testMutationLastName", firstName: "testMutationFirstName", city: "testMutationCity", email: "testMutationMail", phoneNumber: "testMutationPhoneNumber", gender: MALE}) {
+    user {
+      lastName
+    }
+  }
+}
+
+mutation newAnimalMutation {
+  newAnimal(input: {ownerID: "b8bf0a98-dcea-46f4-8cf8-155e4e1a53cb", name: "testMutationAnimalName", specie: DOG, gender: MALE, race: SHIBA, description: "testMutationAnimalDescription", age: 10, isCastrated: true, furColor: BLUE, weight: 10, size: 10, photo: ""}) {
+    animal {
+      name
+    }
+  }
+}
+
+mutation newAnnoucementMutation {
+  newAnnoucement(input: {animalID: "5c640084-bf25-4961-b6c6-de26f2e5c80e", title: "testMutationAnnoucementTiTLE", description: "testMutationAnnoucementDescription", announcementType: VENTE}) {
+    annonce {
+      title
+    }
+  }
+}
+
+mutation newUserMutationWithVariables($user: newUserInput!) {
+  newUser(input: $user) {
+    user {
+      lastName
+      firstName
+    }
+  }
+}
+
+mutation newAnimalMutationWithVariables($animal: newAnimalInput!) {
+  newAnimal(input: $animal) {
+    animal {
+      name
+    }
+  }
+}
+
+mutation newAnnoucementMutationWithVariables($annoucement: newAnnoucementInput!) {
+  newAnnoucement(input: $annoucement) {
+    annonce {
+      title
+    }
+  }
+}

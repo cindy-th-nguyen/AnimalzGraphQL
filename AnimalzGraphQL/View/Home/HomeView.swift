@@ -83,7 +83,7 @@ struct HomeView: View {
             }
             
             Text(testQueryGraphQL).onAppear(perform: {
-                Network.shared.apollo.fetch(query: AnimalzQueryTestQuery()) { result in
+                Network.shared.apollo.fetch(query: SpecificQueryQuery()) { result in
                     switch result{
                     case .success(let graphQLResult):
                         if let users = graphQLResult.data?.users {

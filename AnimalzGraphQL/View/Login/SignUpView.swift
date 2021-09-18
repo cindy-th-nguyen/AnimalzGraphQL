@@ -66,6 +66,8 @@ struct SignUpView: View {
                 )
             Spacer()
             Button(action: {
+                //Exemple insert base user
+                Network.shared.apollo.perform(mutation: NewUserMutationWithVariablesMutation(user: newUserInput(lastName: self.name, firstName: self.name, city: "Paris", phoneNumber: self.phoneNumber, email: self.email, gender: HumanGender.male)))
                 self.willMoveToNextScreen = true
             }, label: {
                 Text("Login")

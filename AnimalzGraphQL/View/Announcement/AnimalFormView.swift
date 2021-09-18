@@ -89,6 +89,8 @@ struct AnimalFormView: View {
                 }
                 Spacer()
                 Button(action: {
+                    //Exemple insert base Animal
+                    Network.shared.apollo.perform(mutation: NewAnimalMutationWithVariablesMutation(animal: newAnimalInput(ownerId: "1e87258e-ce3d-4dda-823b-843f194dfa7f", name: self.name, specie: SpeciesEnum.cat, gender: AnimalGender.male, race: RaceEnum.shiba, description: "AnimalDescriptionWithVariablesMutation", age: Int(self.age), isCastrated: true, furColor: FurColorEnum.blue, weight: 10, size: 10, photo: "AnimalPhotoWithVariablesMutation")))
                 }, label: {
                     Text("Valider")
                         .fontWeight(.bold)
