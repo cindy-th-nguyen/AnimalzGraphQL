@@ -13,7 +13,7 @@ struct HomeView: View {
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
     @State var showModal: Bool = false
-    @State var willNavigateToUserProfil = false
+    @State var showUserProfil = false
     
     var body : some View {
         VStack(spacing: 0) {
@@ -29,7 +29,7 @@ struct HomeView: View {
                     if self.show {
                         Image(systemName: "magnifyingglass")
                             .padding(.horizontal, 8)
-                        TextField("Que recherhez-vous ?", text: self.$txt)
+                        TextField("Que recherchez-vous ?", text: self.$txt)
                         Button(action: {
                             withAnimation {
                                 self.txt = ""
@@ -100,7 +100,7 @@ struct HomeView: View {
             
             HStack {
                 Button(action: {
-                    self.willNavigateToUserProfil = true
+                    self.showUserProfil = true
                 }) {
                     Image(systemName: "person.fill")
                         .foregroundColor(.white)
@@ -125,7 +125,7 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.top)
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: self.$showModal) { ScreenModal() }
-        .navigate(to: ProfilView(), when: $willNavigateToUserProfil)
+        .navigate(to: ProfilView(), when: $showUserProfil)
     }
 }
 

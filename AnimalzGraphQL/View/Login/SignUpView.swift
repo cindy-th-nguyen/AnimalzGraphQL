@@ -10,9 +10,10 @@ import SwiftUI
 struct SignUpView: View {
     @State private var name: String = ""
     @State private var email: String = ""
+    @State private var city: String = ""
     @State private var password: String = ""
     @State private var phoneNumber: String = ""
-    @State private var selectedGender: Gender = .female
+    @State private var selectedGender: HumanGender = .female
     @State private var willMoveToNextScreen = false
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -30,7 +31,7 @@ struct SignUpView: View {
                 )
             
             Picker("", selection: $selectedGender) {
-                ForEach(Gender.allCases, id: \.self) { value in
+                ForEach(HumanGender.allCases, id: \.self) { value in
                     Text(value.rawValue)
                         .tag(value)
                 }
@@ -55,6 +56,14 @@ struct SignUpView: View {
                     RoundedRectangle(cornerRadius: 25)
                         .stroke(Color.orange, lineWidth: 2)
                 )
+            TextField(
+                "Ville",
+                text: $city)
+                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 25)
+                        .stroke(Color.orange, lineWidth: 2)
+                )
             SecureField(
                 "Mot de passe",
                 text: $password)
@@ -67,7 +76,7 @@ struct SignUpView: View {
             Spacer()
             Button(action: {
                 //Exemple insert base user
-                Network.shared.apollo.perform(mutation: NewUserMutationWithVariablesMutation(user: newUserInput(lastName: self.name, firstName: self.name, city: "Paris", phoneNumber: self.phoneNumber, email: self.email, gender: HumanGender.male)))
+                Network.shared.apollo.perform(mutation: NewUserMutationWithVariablesMutation(user: newUserInput(lastName: self.name, firstName: self.name, city: self.city, phoneNumber: self.phoneNumber, email: self.email, gender: HumanGender(rawValue: self.selectedGender.rawValue))))
                 self.willMoveToNextScreen = true
             }, label: {
                 Text("Login")
