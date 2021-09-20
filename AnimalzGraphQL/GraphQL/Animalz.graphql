@@ -76,3 +76,9 @@ mutation newAnnoucementMutationWithVariables($annoucement: newAnnoucementInput!)
     }
   }
 }
+
+mutation login($login: newLoginInput!) {
+  newLogin(input: $login) {
+    result
+  }
+}

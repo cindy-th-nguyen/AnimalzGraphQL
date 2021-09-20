@@ -46,7 +46,14 @@ struct LoginView: View {
                             .stroke(Color.orange, lineWidth: 2)
                     )
                 Button(action: {
-                    self.willMoveToNextScreen = true
+                    Network.shared.apollo.perform(mutation: LoginMutation(login: newLoginInput(email: self.email.lowercased(), password: self.password))) {
+                        result in
+                          guard let data = try? result.get().data else { return }
+                        if data.newLogin?.result == "OK" {
+                            self.willMoveToNextScreen = true
+                        }
+                    }
+                    
                 }, label: {
                     Text("Login")
                         .fontWeight(.bold)

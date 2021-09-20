@@ -557,6 +557,45 @@ public enum AnnoucementType: RawRepresentable, Equatable, Hashable, CaseIterable
   }
 }
 
+public struct newLoginInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  /// - Parameters:
+  ///   - email
+  ///   - password
+  ///   - clientMutationId
+  public init(email: Swift.Optional<String?> = nil, password: Swift.Optional<String?> = nil, clientMutationId: Swift.Optional<String?> = nil) {
+    graphQLMap = ["email": email, "password": password, "clientMutationId": clientMutationId]
+  }
+
+  public var email: Swift.Optional<String?> {
+    get {
+      return graphQLMap["email"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "email")
+    }
+  }
+
+  public var password: Swift.Optional<String?> {
+    get {
+      return graphQLMap["password"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "password")
+    }
+  }
+
+  public var clientMutationId: Swift.Optional<String?> {
+    get {
+      return graphQLMap["clientMutationId"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "clientMutationId")
+    }
+  }
+}
+
 public final class SpecificQueryQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
@@ -1793,6 +1832,100 @@ public final class NewAnnoucementMutationWithVariablesMutation: GraphQLMutation 
           set {
             resultMap.updateValue(newValue, forKey: "title")
           }
+        }
+      }
+    }
+  }
+}
+
+public final class LoginMutation: GraphQLMutation {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    mutation login($login: newLoginInput!) {
+      newLogin(input: $login) {
+        __typename
+        result
+      }
+    }
+    """
+
+  public let operationName: String = "login"
+
+  public var login: newLoginInput
+
+  public init(login: newLoginInput) {
+    self.login = login
+  }
+
+  public var variables: GraphQLMap? {
+    return ["login": login]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Mutation"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("newLogin", arguments: ["input": GraphQLVariable("login")], type: .object(NewLogin.selections)),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(newLogin: NewLogin? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "newLogin": newLogin.flatMap { (value: NewLogin) -> ResultMap in value.resultMap }])
+    }
+
+    /// login User
+    public var newLogin: NewLogin? {
+      get {
+        return (resultMap["newLogin"] as? ResultMap).flatMap { NewLogin(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "newLogin")
+      }
+    }
+
+    public struct NewLogin: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["newLoginPayload"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("result", type: .scalar(String.self)),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(result: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "newLoginPayload", "result": result])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var result: String? {
+        get {
+          return resultMap["result"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "result")
         }
       }
     }
