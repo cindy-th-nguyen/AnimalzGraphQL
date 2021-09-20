@@ -4,7 +4,6 @@
 //
 //  Created by Oudjama on 16/09/2021.
 //
-//test
 
 import Foundation
 import Apollo
