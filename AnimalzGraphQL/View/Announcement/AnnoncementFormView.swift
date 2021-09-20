@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct AnnoncementFormView: View {
+    @State private var message = ""
+    @State private var textStyle = UIFont.TextStyle.body
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TextView(text: $message, textStyle: $textStyle)
+            .padding(.horizontal)
     }
 }
 

@@ -14,6 +14,10 @@ struct LoginView: View {
     @State private var willMoveToNextScreen = false
     @State private var willMoveToSignUpScreen = false
     
+    func getUserID() -> String {
+        // TO DO : Get user id if email + password fit
+        return ""
+    }
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 25) {
