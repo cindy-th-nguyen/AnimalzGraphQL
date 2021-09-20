@@ -13,7 +13,6 @@ struct HomeView: View {
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
     @State var showModal: Bool = false
-    @State var showUserProfil = false
     
     var body : some View {
         VStack(spacing: 0) {
@@ -99,16 +98,6 @@ struct HomeView: View {
             })
             
             HStack {
-                Button(action: {
-                    self.showUserProfil = true
-                }) {
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.white)
-                        .padding()
-                }
-                .background(Color.orange)
-                .clipShape(Circle())
-                .padding()
                 Spacer()
                 Button(action: {
                     self.showModal.toggle()
@@ -125,7 +114,6 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.top)
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: self.$showModal) { ScreenModal() }
-        .navigate(to: ProfilView(), when: $showUserProfil)
     }
 }
 

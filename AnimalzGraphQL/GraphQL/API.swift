@@ -146,10 +146,11 @@ public struct newUserInput: GraphQLMapConvertible {
   ///   - city
   ///   - phoneNumber
   ///   - email
+  ///   - password
   ///   - gender
   ///   - clientMutationId
-  public init(lastName: Swift.Optional<String?> = nil, firstName: Swift.Optional<String?> = nil, city: Swift.Optional<String?> = nil, phoneNumber: Swift.Optional<String?> = nil, email: Swift.Optional<String?> = nil, gender: Swift.Optional<HumanGender?> = nil, clientMutationId: Swift.Optional<String?> = nil) {
-    graphQLMap = ["lastName": lastName, "firstName": firstName, "city": city, "phoneNumber": phoneNumber, "email": email, "gender": gender, "clientMutationId": clientMutationId]
+  public init(lastName: Swift.Optional<String?> = nil, firstName: Swift.Optional<String?> = nil, city: Swift.Optional<String?> = nil, phoneNumber: Swift.Optional<String?> = nil, email: Swift.Optional<String?> = nil, password: Swift.Optional<String?> = nil, gender: Swift.Optional<HumanGender?> = nil, clientMutationId: Swift.Optional<String?> = nil) {
+    graphQLMap = ["lastName": lastName, "firstName": firstName, "city": city, "phoneNumber": phoneNumber, "email": email, "password": password, "gender": gender, "clientMutationId": clientMutationId]
   }
 
   public var lastName: Swift.Optional<String?> {
@@ -194,6 +195,15 @@ public struct newUserInput: GraphQLMapConvertible {
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "email")
+    }
+  }
+
+  public var password: Swift.Optional<String?> {
+    get {
+      return graphQLMap["password"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "password")
     }
   }
 

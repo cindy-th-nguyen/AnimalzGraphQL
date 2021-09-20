@@ -57,10 +57,6 @@ struct LoginView: View {
                         .background(Color.orange)
                         .cornerRadius(25)
                 })
-                
-                Button(action: {}, label: {
-                    Text("Mot de passe oublié?")
-                })
             }
             .padding(40)
             
