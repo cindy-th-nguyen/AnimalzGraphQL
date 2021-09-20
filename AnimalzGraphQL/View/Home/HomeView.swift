@@ -13,6 +13,7 @@ struct HomeView: View {
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
     @State var showModal: Bool = false
+    //test
     
     var body : some View {
         VStack(spacing: 0) {
