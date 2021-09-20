@@ -17,8 +17,6 @@
 		7B326E9A26F38EB6004301F1 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B326E9926F38EB6004301F1 /* Gender.swift */; };
 		7B326E9E26F39746004301F1 /* AnimalFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B326E9D26F39746004301F1 /* AnimalFormView.swift */; };
 		7B326EA226F4859D004301F1 /* AnnoncementFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B326EA126F4859D004301F1 /* AnnoncementFormView.swift */; };
-		7B326EA626F6793C004301F1 /* SecondAnimalFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B326EA526F6793C004301F1 /* SecondAnimalFormView.swift */; };
-		7B326EA926F679C3004301F1 /* FirstAnimalFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B326EA826F679C3004301F1 /* FirstAnimalFormView.swift */; };
 		7B76225B26F1E53700A49270 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76225A26F1E53700A49270 /* HomeView.swift */; };
 		7B76226626F1EE9000A49270 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76226526F1EE9000A49270 /* View+Extension.swift */; };
 		7B9CF62C26F1DD5300C83099 /* AnimalzGraphQLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9CF62B26F1DD5300C83099 /* AnimalzGraphQLApp.swift */; };
@@ -41,8 +39,6 @@
 		7B326E9926F38EB6004301F1 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		7B326E9D26F39746004301F1 /* AnimalFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalFormView.swift; sourceTree = "<group>"; };
 		7B326EA126F4859D004301F1 /* AnnoncementFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnoncementFormView.swift; sourceTree = "<group>"; };
-		7B326EA526F6793C004301F1 /* SecondAnimalFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondAnimalFormView.swift; sourceTree = "<group>"; };
-		7B326EA826F679C3004301F1 /* FirstAnimalFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAnimalFormView.swift; sourceTree = "<group>"; };
 		7B76225A26F1E53700A49270 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7B76226526F1EE9000A49270 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		7B9CF62826F1DD5300C83099 /* AnimalzGraphQL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimalzGraphQL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,8 +178,6 @@
 				7BC8F95626F351B600D5FB76 /* ImagePicker.swift */,
 				7B326EA126F4859D004301F1 /* AnnoncementFormView.swift */,
 				7B326E9D26F39746004301F1 /* AnimalFormView.swift */,
-				7B326EA826F679C3004301F1 /* FirstAnimalFormView.swift */,
-				7B326EA526F6793C004301F1 /* SecondAnimalFormView.swift */,
 			);
 			path = Announcement;
 			sourceTree = "<group>";
@@ -296,7 +290,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B326E9126F374F1004301F1 /* API.swift in Sources */,
-				7B326EA926F679C3004301F1 /* FirstAnimalFormView.swift in Sources */,
 				7BA1274A26F241DD002F1ED2 /* ScreenModal.swift in Sources */,
 				7B9CF63C26F1DFDD00C83099 /* LoginView.swift in Sources */,
 				7B76225B26F1E53700A49270 /* HomeView.swift in Sources */,
@@ -305,7 +298,6 @@
 				7B326E9026F374F1004301F1 /* Apollo.swift in Sources */,
 				7BA1272926F1FEB6002F1ED2 /* CellView.swift in Sources */,
 				7B326E9A26F38EB6004301F1 /* Gender.swift in Sources */,
-				7B326EA626F6793C004301F1 /* SecondAnimalFormView.swift in Sources */,
 				7B9CF62E26F1DD5300C83099 /* ContentView.swift in Sources */,
 				7BA1273D26F2412C002F1ED2 /* ProfilView.swift in Sources */,
 				7B326E9E26F39746004301F1 /* AnimalFormView.swift in Sources */,
