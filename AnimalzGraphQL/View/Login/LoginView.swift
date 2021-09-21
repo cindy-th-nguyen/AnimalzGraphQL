@@ -13,11 +13,8 @@ struct LoginView: View {
     @State private var isEditing = false
     @State private var willMoveToNextScreen = false
     @State private var willMoveToSignUpScreen = false
+    @ObservedObject private var appSetting = AppSetting.shared
     
-    func getUserID() -> String {
-        // TO DO : Get user id if email + password fit
-        return ""
-    }
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 25) {
@@ -49,7 +46,9 @@ struct LoginView: View {
                     Network.shared.apollo.perform(mutation: LoginMutation(login: newLoginInput(email: self.email.lowercased(), password: self.password))) {
                         result in
                           guard let data = try? result.get().data else { return }
-                        if data.newLogin?.result == "OK" {
+                        if data.newLogin?.result == true {
+//                            data.newLogin?.u
+                            appSetting.userFields = data.newLogin?.user?.fragments.allUserFields
                             self.willMoveToNextScreen = true
                         }
                     }

@@ -21,7 +21,9 @@ struct AnimalFormView: View {
     @State private var age: String = ""
     @State private var weight: String = ""
     @State private var height: String = ""
+    @State private var isCastrated: Bool = true
     @State var dynamicSize: CGFloat = 100
+    @ObservedObject private var appSetting = AppSetting.shared
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
@@ -151,12 +153,19 @@ struct AnimalFormView: View {
                         }
                     }.pickerStyle(SegmentedPickerStyle())
                     
+                    Toggle("Castré.e ?", isOn: $isCastrated)
+                    
                 }
                 Spacer()
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    guard let userFields = appSetting.userFields else {
+                        return
+                    }
                     //Exemple insert base Animal
-                    Network.shared.apollo.perform(mutation: NewAnimalMutationWithVariablesMutation(animal: newAnimalInput(ownerId: "1e87258e-ce3d-4dda-823b-843f194dfa7f", name: self.name, specie: SpeciesEnum(rawValue: self.selectedSpecie.rawValue), gender: AnimalGender.male, race: RaceEnum.shiba, description: "AnimalDescriptionWithVariablesMutation", age: Int(self.age), isCastrated: true, furColor: FurColorEnum.blue, weight: 10, size: 10, photo: "AnimalPhotoWithVariablesMutation")))
+                    // TO DO : Fur color
+                    Network.shared.apollo.perform(mutation: NewAnimalMutationWithVariablesMutation(animal: newAnimalInput(ownerId: userFields.userId, name: self.name, specie: SpeciesEnum(rawValue: self.selectedSpecie.rawValue), gender: AnimalGender(rawValue: self.selectedGender.rawValue), race: RaceEnum(rawValue: self.selectedRace.rawValue), description: "", age: Int(self.age), isCastrated: self.isCastrated, furColor: FurColorEnum.other, weight: 10, size: 10, photo: self.inputImage?.description)))
+                    self.presentationMode.wrappedValue.dismiss()
+
                 }, label: {
                     Text("Terminer")
                         .fontWeight(.bold)

@@ -13,7 +13,7 @@ struct HomeView: View {
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
     @State var showModal: Bool = false
-    //test
+    @ObservedObject private var appSetting = AppSetting.shared
     
     var body : some View {
         VStack(spacing: 0) {
@@ -68,12 +68,12 @@ struct HomeView: View {
                         if data.filter({$0.lowercased().contains(self.txt.lowercased())}).count == 0 {
                             Text("No Results Found").padding(.top, 10)
                         } else {
-                            ForEach(data.filter({$0.lowercased().contains(self.txt.lowercased())}),id: \.self){i in
+                            ForEach(data.filter({$0.lowercased().contains(self.txt.lowercased())}),id: \.self){ i in
                                 CellView(image: i, name: "Normouss")
                             }
                         }
                     } else {
-                        ForEach(data,id: \.self){i in
+                        ForEach(data,id: \.self){ i in
                             CellView(image: i, name: "Normouss")
                         }
                     }
@@ -81,22 +81,21 @@ struct HomeView: View {
                 .padding(.horizontal, 15)
                 .padding(.top, 10)
             }
-            
-            Text(testQueryGraphQL).onAppear(perform: {
-                Network.shared.apollo.fetch(query: SpecificQueryQuery()) { result in
-                    switch result{
-                    case .success(let graphQLResult):
-                        if let users = graphQLResult.data?.users {
-                            self.testQueryGraphQL = "first user json: \(users[0]?.firstName ?? "No name found")"
-                            users.forEach { user in
-                                print("user firstName : \(user?.firstName ?? "No name found")")
-                            }
-                        }
-                    case .failure(let error):
-                        print("Error : \(error)")
-                    }
-                }
-            })
+//            Text(testQueryGraphQL).onAppear(perform: {
+//                Network.shared.apollo.fetch(query: SpecificQueryQuery()) { result in
+//                    switch result{
+//                    case .success(let graphQLResult):
+//                        if let users = graphQLResult.data?.users {
+//                            self.testQueryGraphQL = "first user json: \(users[0]?.firstName ?? "No name found")"
+//                            users.forEach { user in
+//                                print("user firstName : \(user?.firstName ?? "No name found")")
+//                            }
+//                        }
+//                    case .failure(let error):
+//                        print("Error : \(error)")
+//                    }
+//                }
+//            })
             
             HStack {
                 Spacer()

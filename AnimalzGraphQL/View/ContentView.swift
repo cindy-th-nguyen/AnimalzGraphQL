@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+class AppSetting: ObservableObject {
+    static let shared = AppSetting()
+    private init() {}
+
+    @Published var userFields: AllUserFields? = nil
+}
+
 struct ContentView: View {
     @State var isLoggedIn: Bool = false
     

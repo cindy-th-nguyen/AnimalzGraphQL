@@ -1,53 +1,99 @@
-query specificQuery {
-  users {
-    userID
-    firstName
-    phoneNumber
-    gender
-    animalList {
-      animalID
-      name
-      race
-      gender
-    }
-  }
-  animals {
-    name
-    animalID
+fragment allAnimalFields on Animals {
+         animalID
     ownerID
-  }
-  annonces {
+    name
+    specie
+    gender
+    race
+    description
+         age
+      furColor
+    isCastrated
+    weight
+    size
+    photo
+}
+
+fragment allAnnoucementFields on Annonce {
     annonceID
     animalID
+    creationDate
     title
     description
-    creationDate
+    announcementType
     commentaires {
+      annonceID
       commentaire
     }
+  
+}
+
+fragment allUserFields on User {
+  userID
+    lastName
+    firstName
+    city
+    phoneNumber
+    email
+      password
+    gender
+    animalList {
+      ...allAnimalFields
+    }
+}
+  
+query specificQuery {
+  users(limit: 10, offset: 0){
+    ...allUserFields
+  }
+  animals {
+    ...allAnimalFields
+  }
+  annonces {
+    ...allAnnoucementFields
   }
 }
 
-mutation newUserMutation {
-  newUser(input: {lastName: "testMutationLastName", firstName: "testMutationFirstName", city: "testMutationCity", email: "testMutationMail", phoneNumber: "testMutationPhoneNumber", gender: MALE}) {
-    user {
-      lastName
+query allAnnoucementQuery {
+  annonces {
+    ...allAnnoucementFields
+  }
+}
+
+query allUserQuery {
+  users(limit: 10, offset: 0){
+    ...allUserFields
+  }
+}
+
+query allAnimalQuery {
+  animals {
+    ...allAnimalFields
+  }
+}
+
+query testOrderByQuery {
+  annonces(orderBy: {field: CREATIONDATE, direction: ASC}) {
+    creationDate
+    author
+    title
+  }
+}
+
+mutation login($login: newLoginInput!) {
+  newLogin(input: $login) {
+    result,
+    user{
+      ...allUserFields
     }
   }
 }
 
-mutation newAnimalMutation {
-  newAnimal(input: {ownerID: "b8bf0a98-dcea-46f4-8cf8-155e4e1a53cb", name: "testMutationAnimalName", specie: DOG, gender: MALE, race: SHIBA, description: "testMutationAnimalDescription", age: 10, isCastrated: true, furColor: BLUE, weight: 10, size: 10, photo: ""}) {
-    animal {
-      name
-    }
-  }
-}
-
-mutation newAnnoucementMutation {
-  newAnnoucement(input: {animalID: "5c640084-bf25-4961-b6c6-de26f2e5c80e", title: "testMutationAnnoucementTiTLE", description: "testMutationAnnoucementDescription", announcementType: VENTE}) {
-    annonce {
-      title
+mutation loginTest {
+  newLogin(input: {email: "toto@gmail.fr",password: "123456789"}) {
+    result,
+      user{
+      ...allUserFields
     }
   }
 }
@@ -55,8 +101,7 @@ mutation newAnnoucementMutation {
 mutation newUserMutationWithVariables($user: newUserInput!) {
   newUser(input: $user) {
     user {
-      lastName
-      firstName
+      ...allUserFields
     }
   }
 }
@@ -64,7 +109,7 @@ mutation newUserMutationWithVariables($user: newUserInput!) {
 mutation newAnimalMutationWithVariables($animal: newAnimalInput!) {
   newAnimal(input: $animal) {
     animal {
-      name
+     ...allAnimalFields
     }
   }
 }
@@ -72,13 +117,7 @@ mutation newAnimalMutationWithVariables($animal: newAnimalInput!) {
 mutation newAnnoucementMutationWithVariables($annoucement: newAnnoucementInput!) {
   newAnnoucement(input: $annoucement) {
     annonce {
-      title
+      ...allAnnoucementFields
     }
-  }
-}
-
-mutation login($login: newLoginInput!) {
-  newLogin(input: $login) {
-    result
   }
 }
