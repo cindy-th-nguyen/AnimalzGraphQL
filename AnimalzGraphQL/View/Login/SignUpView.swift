@@ -76,8 +76,15 @@ struct SignUpView: View {
             Spacer()
             Button(action: {
                 //Exemple insert base user
-                Network.shared.apollo.perform(mutation: NewUserMutationWithVariablesMutation(user: newUserInput(lastName: self.name, firstName: self.name, city: self.city, phoneNumber: self.phoneNumber, email: self.email, password: self.password, gender: HumanGender(rawValue: self.selectedGender.rawValue))))
-                self.willMoveToNextScreen = true
+                if (self.name == "" || self.city == "" || self.phoneNumber == "" || self.email == "" || self.password == "") {
+                    return
+                } else {
+                    Network.shared.apollo.perform(mutation: NewUserMutationWithVariablesMutation(user: newUserInput(lastName: self.name, firstName: self.name, city: self.city, phoneNumber: self.phoneNumber, email: self.email, password: self.password, gender: HumanGender(rawValue: self.selectedGender.rawValue))))
+                    
+                    self.willMoveToNextScreen = true
+                }
+               
+                
             }, label: {
                 Text("Login")
                     .fontWeight(.bold)
@@ -91,7 +98,7 @@ struct SignUpView: View {
         }
         .padding(20)
         .padding(.bottom, 20)
-        .navigate(to: HomeView(), when: $willMoveToNextScreen)
+        .navigate(to: LoginView(), when: $willMoveToNextScreen)
         .navigationBarBackButtonHidden(false)
     }
 }
