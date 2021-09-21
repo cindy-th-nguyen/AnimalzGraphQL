@@ -163,7 +163,7 @@ struct AnimalFormView: View {
                     }
                     //Exemple insert base Animal
                     // TO DO : Fur color
-                    Network.shared.apollo.perform(mutation: NewAnimalMutationWithVariablesMutation(animal: newAnimalInput(ownerId: userFields.userId, name: self.name, specie: SpeciesEnum(rawValue: self.selectedSpecie.rawValue), gender: AnimalGender(rawValue: self.selectedGender.rawValue), race: RaceEnum(rawValue: self.selectedRace.rawValue), description: "", age: Int(self.age), isCastrated: self.isCastrated, furColor: FurColorEnum.other, weight: 10, size: 10, photo: self.inputImage?.description)))
+                    Network.shared.apollo.perform(mutation: NewAnimalMutationWithVariablesMutation(animal: newAnimalInput(ownerId: userFields.userId, name: self.name, specie: SpeciesEnum(rawValue: self.selectedSpecie.rawValue), gender: AnimalGender(rawValue: self.selectedGender.rawValue), race: RaceEnum(rawValue: self.selectedRace.rawValue), description: "", age: Int(self.age), isCastrated: self.isCastrated, furColor: FurColorEnum(rawValue: self.selectedColor.rawValue), weight: 10, size: 10, photo: self.inputImage?.description)))
                     self.presentationMode.wrappedValue.dismiss()
 
                 }, label: {
