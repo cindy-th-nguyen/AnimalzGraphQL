@@ -9,7 +9,7 @@ import Foundation
 
 
 struct AnnonceModel: Hashable, Identifiable {
-    var id: ObjectIdentifier?
+    var id = UUID()
     var title:String
     }
 

@@ -12,14 +12,11 @@ struct AnnouncementCellView: View {
     var body: some View {
         HStack {
                     Image(systemName: "photo")
-                        .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     VStack(alignment: .leading) {
-                        Text(name)
-                            .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        Text(self.name)
                         Text("Description")
-                            .font(.subheadline)
                     }
-                }
+        }
     }
 }
 

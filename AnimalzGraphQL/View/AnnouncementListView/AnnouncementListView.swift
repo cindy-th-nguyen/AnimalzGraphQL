@@ -7,45 +7,56 @@
 
 import SwiftUI
 
-
-
-
-
 struct AnnouncementListView: View {
     
     @State var annoucementList: [AnnonceModel] = []
-    @State var test: [String] = ["a", "b", "c"]
+    @State var offsetLocal: Int = 0
     
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(annoucementList) { announcement in
-                    AnnouncementCellView(name: announcement.title)
-                }
-            }
-        }
-        .navigationTitle("ANNONCES")
-        .onAppear(perform: {
-            Network.shared.apollo.fetch(query: AnnonceLoaderQuery(pagination: PaginationInput(limit: 10, offset: 0))) {
-                result in
-                switch result {
-                case .success(let graphQLResult):
+    func fetch(offset:Int) {
+        Network.shared.apollo.fetch(query: AnnonceLoaderQuery(pagination: PaginationInput(limit: 10, offset: offset))) {
+            result in
+            switch result {
+            case .success(let graphQLResult):
+                DispatchQueue.main.async {
                     if let annonce = graphQLResult.data?.annoncesLoader {
                         annonce.forEach { ann in
-                            let title = ann?.fragments.allAnnoucementFields.title
-                            annoucementList.append(AnnonceModel(title: title ?? "no title"))
+                            self.annoucementList.append(AnnonceModel(title: ann?.fragments.allAnnoucementFields.title ?? "no title"))
                         }
                     }
-                case .failure(let error):
-                    print("errore : \(error)")
+                    self.annoucementList.forEach { annL in
+                        print("FETCH ANNONCE SUCCES :\(annL.title)")
+                    }
                 }
+            case .failure(let error):
+                print("error : \(error)")
             }
-        })
+        }
+        
+        self.annoucementList.forEach { annL in
+            print("FETCH ANNONCE :\(annL.title)")
+        }
     }
-        
-        
-
     
+    var body: some View {
+        VStack{
+            NavigationView {
+                List(self.annoucementList) { announcement in
+                    AnnouncementCellView(name: announcement.title)
+                    }
+            }.onAppear(){
+                fetch(offset: offsetLocal)
+            }
+            .navigationBarBackButtonHidden(false)
+            .navigationTitle("ANNONCES")
+            Button {
+                self.offsetLocal +=  11
+                fetch(offset: offsetLocal)
+            } label: {
+                Text("FETCH")
+            }
+
+        }
+        }
 }
 
 struct AnnouncementListView_Previews: PreviewProvider {
