@@ -13,6 +13,7 @@ struct HomeView: View {
     @State var data = ["cat_mock"]
     @State var testQueryGraphQL = ""
     @State var showModal: Bool = false
+    @State private var willMoveToNextScreen = false
     @ObservedObject private var appSetting = AppSetting.shared
     
     var body : some View {
@@ -81,21 +82,6 @@ struct HomeView: View {
                 .padding(.horizontal, 15)
                 .padding(.top, 10)
             }
-//            Text(testQueryGraphQL).onAppear(perform: {
-//                Network.shared.apollo.fetch(query: SpecificQueryQuery()) { result in
-//                    switch result{
-//                    case .success(let graphQLResult):
-//                        if let users = graphQLResult.data?.users {
-//                            self.testQueryGraphQL = "first user json: \(users[0]?.firstName ?? "No name found")"
-//                            users.forEach { user in
-//                                print("user firstName : \(user?.firstName ?? "No name found")")
-//                            }
-//                        }
-//                    case .failure(let error):
-//                        print("Error : \(error)")
-//                    }
-//                }
-//            })
             
             HStack {
                 Spacer()
@@ -109,8 +95,19 @@ struct HomeView: View {
                 .background(Color.orange)
                 .clipShape(Circle())
                 .padding()
+                
             }
+            
+            Button(action: {
+                self.willMoveToNextScreen = true
+            }, label: {
+                Text("ANNONCES")
+            })
+            .frame(width: UIScreen.main.bounds.size.width, height: 50, alignment: .center)
+            .background(Color.orange)
+            .foregroundColor(.white)
         }
+        .navigate(to: AnnouncementListView(), when: $willMoveToNextScreen)
         .edgesIgnoringSafeArea(.top)
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: self.$showModal) { ScreenModal() }
