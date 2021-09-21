@@ -4,6 +4,35 @@
 import Apollo
 import Foundation
 
+public struct PaginationInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  /// - Parameters:
+  ///   - limit
+  ///   - offset
+  public init(limit: Swift.Optional<Int?> = nil, offset: Swift.Optional<Int?> = nil) {
+    graphQLMap = ["limit": limit, "offset": offset]
+  }
+
+  public var limit: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["limit"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "limit")
+    }
+  }
+
+  public var offset: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["offset"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "offset")
+    }
+  }
+}
+
 public struct newLoginInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
@@ -601,7 +630,7 @@ public final class SpecificQueryQuery: GraphQLQuery {
   public let operationDefinition: String =
     """
     query specificQuery {
-      users(limit: 10, offset: 0) {
+      users {
         __typename
         ...allUserFields
       }
@@ -634,7 +663,7 @@ public final class SpecificQueryQuery: GraphQLQuery {
 
     public static var selections: [GraphQLSelection] {
       return [
-        GraphQLField("users", arguments: ["limit": 10, "offset": 0], type: .list(.object(User.selections))),
+        GraphQLField("users", type: .list(.object(User.selections))),
         GraphQLField("animals", type: .list(.object(Animal.selections))),
         GraphQLField("annonces", type: .list(.object(Annonce.selections))),
       ]
@@ -949,7 +978,7 @@ public final class AllUserQueryQuery: GraphQLQuery {
   public let operationDefinition: String =
     """
     query allUserQuery {
-      users(limit: 10, offset: 0) {
+      users {
         __typename
         ...allUserFields
       }
@@ -973,7 +1002,7 @@ public final class AllUserQueryQuery: GraphQLQuery {
 
     public static var selections: [GraphQLSelection] {
       return [
-        GraphQLField("users", arguments: ["limit": 10, "offset": 0], type: .list(.object(User.selections))),
+        GraphQLField("users", type: .list(.object(User.selections))),
       ]
     }
 
@@ -1159,11 +1188,123 @@ public final class AllAnimalQueryQuery: GraphQLQuery {
   }
 }
 
-public final class TestOrderByQueryQuery: GraphQLQuery {
+public final class AnnonceLoaderQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query testOrderByQuery {
+    query annonceLoader($pagination: PaginationInput!) {
+      annoncesLoader(pagination: $pagination) {
+        __typename
+        ...allAnnoucementFields
+      }
+    }
+    """
+
+  public let operationName: String = "annonceLoader"
+
+  public var queryDocument: String {
+    var document: String = operationDefinition
+    document.append("\n" + AllAnnoucementFields.fragmentDefinition)
+    return document
+  }
+
+  public var pagination: PaginationInput
+
+  public init(pagination: PaginationInput) {
+    self.pagination = pagination
+  }
+
+  public var variables: GraphQLMap? {
+    return ["pagination": pagination]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Query"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("annoncesLoader", arguments: ["pagination": GraphQLVariable("pagination")], type: .list(.object(AnnoncesLoader.selections))),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(annoncesLoader: [AnnoncesLoader?]? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "annoncesLoader": annoncesLoader.flatMap { (value: [AnnoncesLoader?]) -> [ResultMap?] in value.map { (value: AnnoncesLoader?) -> ResultMap? in value.flatMap { (value: AnnoncesLoader) -> ResultMap in value.resultMap } } }])
+    }
+
+    public var annoncesLoader: [AnnoncesLoader?]? {
+      get {
+        return (resultMap["annoncesLoader"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [AnnoncesLoader?] in value.map { (value: ResultMap?) -> AnnoncesLoader? in value.flatMap { (value: ResultMap) -> AnnoncesLoader in AnnoncesLoader(unsafeResultMap: value) } } }
+      }
+      set {
+        resultMap.updateValue(newValue.flatMap { (value: [AnnoncesLoader?]) -> [ResultMap?] in value.map { (value: AnnoncesLoader?) -> ResultMap? in value.flatMap { (value: AnnoncesLoader) -> ResultMap in value.resultMap } } }, forKey: "annoncesLoader")
+      }
+    }
+
+    public struct AnnoncesLoader: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["Annonce"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLFragmentSpread(AllAnnoucementFields.self),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(unsafeResultMap: resultMap)
+        }
+        set {
+          resultMap += newValue.resultMap
+        }
+      }
+
+      public struct Fragments {
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public var allAnnoucementFields: AllAnnoucementFields {
+          get {
+            return AllAnnoucementFields(unsafeResultMap: resultMap)
+          }
+          set {
+            resultMap += newValue.resultMap
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class TestOrderByQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    query testOrderBy {
       annonces(orderBy: {field: CREATIONDATE, direction: ASC}) {
         __typename
         creationDate
@@ -1173,7 +1314,7 @@ public final class TestOrderByQueryQuery: GraphQLQuery {
     }
     """
 
-  public let operationName: String = "testOrderByQuery"
+  public let operationName: String = "testOrderBy"
 
   public init() {
   }

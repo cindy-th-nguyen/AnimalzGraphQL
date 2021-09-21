@@ -43,7 +43,7 @@ fragment allUserFields on User {
 }
   
 query specificQuery {
-  users(limit: 10, offset: 0){
+  users{
     ...allUserFields
   }
   animals {
@@ -61,7 +61,7 @@ query allAnnoucementQuery {
 }
 
 query allUserQuery {
-  users(limit: 10, offset: 0){
+  users{
     ...allUserFields
   }
 }
@@ -72,7 +72,13 @@ query allAnimalQuery {
   }
 }
 
-query testOrderByQuery {
+query annonceLoader($pagination:PaginationInput!) {
+  annoncesLoader(pagination: $pagination){
+    ...allAnnoucementFields
+  }
+}
+
+query testOrderBy {
   annonces(orderBy: {field: CREATIONDATE, direction: ASC}) {
     creationDate
     author
